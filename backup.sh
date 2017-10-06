@@ -31,3 +31,4 @@ fi
 
 find $BACKUP -name 'pozitiff-website_*' -type f -mtime +7 -exec rm {} \;
 
+rsync -a $BACKUP/pozitiff-website_$NOW.tar.gz vitalii@192.168.48.122:/home/vitalii/backups
