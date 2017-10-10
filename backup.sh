@@ -18,7 +18,7 @@ tar -cf $ARCHIVE pozitiff-website/
 if [ $? ]; then
   echo TAR archiving done!
 else
-echo TAR Error!
+  echo TAR Error!
 fi
 
 gzip $ARCHIVE
@@ -26,9 +26,9 @@ gzip $ARCHIVE
 if [ $? ]; then
   echo GZIP archiving done!
 else
-echo GZIP Error!
+  echo GZIP Error!
 fi
 
 find $BACKUP -name 'pozitiff-website_*' -type f -mtime +7 -exec rm {} \;
 
-rsync -a $BACKUP/pozitiff-website_$NOW.tar.gz vitalii@192.168.48.122:/home/vitalii/backups
+rsync -av --delete $BACKUP/ vitalii@192.168.48.141:/home/vitalii/backups/
