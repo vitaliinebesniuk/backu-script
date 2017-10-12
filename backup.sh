@@ -1,21 +1,22 @@
 #!/bin/sh
-HOME=/home/vitalii
+WEBSERVERS_DIR=/home/vitalii
 NOW=$(date +%d-%m-%Y_%H:%M)
-BACKUP=$HOME/backups
+BACKUP_DST=$HOME/backups
+STATUS=$?
 
-if [ ! -d $BACKUP ]; then
-  mkdir $BACKUP
+if [ ! -d $BACKUP_DST ]; then
+  mkdir $BACKUP_DST
 fi
 
-cd $HOME
+cd $WEBSERVERS_DIR
 
-ARCHIVE=$BACKUP/pozitiff-website_$NOW.tar
+ARCHIVE=$BACKUP_DST/pozitiff-website_$NOW.tar
 
 echo Archiving  to $ARCHIVE
 
 tar -cf $ARCHIVE pozitiff-website/
 
-if [ $? ]; then
+if [ $STATUS ]; then
   echo TAR archiving done!
 else
   echo TAR Error!
@@ -23,12 +24,12 @@ fi
 
 gzip $ARCHIVE
 
-if [ $? ]; then
+if [ $STATUS ]; then
   echo GZIP archiving done!
 else
   echo GZIP Error!
 fi
 
-find $BACKUP -name 'pozitiff-website_*' -type f -mtime +7 -exec rm {} \;
+find $BACKUP_DST -name 'pozitiff-website_*' -type f -mtime +7 -exec rm {} \;
 
-rsync -av --delete $BACKUP/ vitalii@192.168.48.141:/home/vitalii/backups/
+#rsync -av --delete $BACKUP/ vitalii@192.168.48.141:/home/vitalii/backups/
