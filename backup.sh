@@ -11,6 +11,15 @@ fi
 
 cd $WEBSERVERS_DIR
 
+TAR=tar
+CHECK_TAR=$(which $TAR)
+if [ $STATUS = 0 ]; then
+  echo "Package $TAR is installed"
+else
+  echo "Installing $TAR package..."
+  sudo apt-get -y install $TAR
+fi
+
 ARCHIVE=$BACKUP_DST/$WEBSERVERS_NAME-$NOW.tar
 
 echo Archiving  to $ARCHIVE
